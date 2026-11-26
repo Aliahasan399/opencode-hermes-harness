@@ -1,0 +1,6 @@
+# Issue template configuration.
+# Security vulnerabilities must NOT be reported as public issues.
+# Use the repository's private vulnerability reporting / security advisory channel
+# described in SECURITY.md instead.
+blank_issues_enabled: true
+contact_links: []

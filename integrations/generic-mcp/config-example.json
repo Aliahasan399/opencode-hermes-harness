@@ -1,0 +1,18 @@
+{
+  "_comment": "ILLUSTRATIVE ONLY — no named client is verified. Replace all placeholders locally. Never commit real credentials.",
+  "mcpServers": {
+    "opencode-memory": {
+      "command": "node",
+      "args": ["<ABSOLUTE_PATH_TO_ENGINE>/src/server.js"],
+      "env": {
+        "MEMORY_DB_HOST": "127.0.0.1",
+        "MEMORY_DB_PORT": "<YOUR_DB_PORT>",
+        "MEMORY_DB_USER": "<YOUR_DB_USER>",
+        "MEMORY_DB_PASSWORD": "<YOUR_LOCAL_DB_PASSWORD>",
+        "MEMORY_DB_NAME": "<YOUR_DB_NAME>",
+        "HARNESS_SEMANTIC_LLM": "0",
+        "OPTIMIZATION_LEVEL": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+name: Docs check
+
+# SAFE CHECKS ONLY. Validates JSON and relative links in the public integration docs.
+# External URLs are NOT fetched (no network dependency, no fabricated verification).
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate JSON and relative Markdown links
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+
+          function walk(dir, out = []) {
+            if (!fs.existsSync(dir)) return out;
+            for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+              const p = path.join(dir, e.name);
+              if (e.isDirectory()) walk(p, out);
+              else out.push(p);
+            }
+            return out;
+          }
+
+          const roots = ['integrations', '.github'];
+          const files = roots.flatMap((r) => walk(r));
+          let md = 0, json = 0, links = 0;
+          const errors = [];
+
+          for (const file of files) {
+            if (file.endsWith('.json')) {
+              json++;
+              try { JSON.parse(fs.readFileSync(file, 'utf8')); }
+              catch (e) { errors.push(`${file}: invalid JSON: ${e.message}`); }
+            }
+            if (file.endsWith('.md')) {
+              md++;
+              const text = fs.readFileSync(file, 'utf8');
+              const re = /\[[^\]]*\]\(([^)]+)\)/g;
+              let m;
+              while ((m = re.exec(text))) {
+                const raw = m[1].trim();
+                if (/^(https?:|mailto:|#)/.test(raw)) continue; // external / anchor
+                const target = raw.split('#')[0].split('?')[0];
+                if (!target) continue;
+                links++;
+                const resolved = path.resolve(path.dirname(file), target);
+                if (!fs.existsSync(resolved)) {
+                  errors.push(`${file}: broken relative link -> ${raw}`);
+                }
+              }
+            }
+          }
+
+          console.log(`Checked ${md} Markdown files (${links} relative links) and ${json} JSON files.`);
+          if (errors.length) {
+            for (const e of errors) console.error(e);
+            process.exit(1);
+          }
+          console.log('Docs check: PASS');
+          NODE

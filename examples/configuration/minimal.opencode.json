@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "opencode-memory": {
+        "type": "local",
+        "command": ["node", "<absolute-path-to-release>/engine/src/server.js"],
+        "cwd": "<absolute-path-to-release>/engine"
+      }
+    }
+  },
+  "instructions": ["docs/opencode-harness/AGENTS.md"]
+}

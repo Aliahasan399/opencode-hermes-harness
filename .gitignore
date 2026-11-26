@@ -1,0 +1,40 @@
+.env
+data/
+backups/
+logs/
+# Only sanitized public-release reports under logs/public-release/ are published.
+# Raw internal logs remain ignored.
+!logs/
+logs/*
+!logs/public-release/
+logs/public-release/*
+!logs/public-release/*.md
+node_modules/
+dist/
+
+# ---- Public-release preparation: sensitive/internal exclusions ----
+# Local environment overrides may contain real credentials (DB password, API keys).
+# Only the placeholder example is publishable.
+.env.*
+!.env.example
+
+# Checkpoints hold source snapshots and phase docs with local paths / session IDs.
+checkpoints/
+
+# Generated evaluation reports may contain internal paths, session IDs, or raw outputs;
+# publish only explicitly sanitized copies.
+reports/
+
+# Python tooling caches and compiled artifacts from local helper scripts.
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# SQL error logs from backup/restore tooling can include connection details.
+*.sql.err
+
+# Engine-local dependencies (in addition to the root node_modules/ rule above).
+engine/node_modules/
+
+# Editor / OS metadata.
+.DS_Store
