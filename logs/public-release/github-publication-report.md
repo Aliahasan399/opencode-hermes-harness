@@ -1,6 +1,13 @@
 # GitHub Publication Report — OpenCode Harness
 
-Date: 2026-11-26 (updated after Stage A reinspection). Status: **NOT PUBLISHED — publication gated on owner decisions**. No Git repository was initialized, no remote was added, no commit was made, no push or pull request was created, and no repository URL was invented.
+Date: 2026-11-26. Status: **PUBLISHED** (after owner decisions: Apache-2.0 license, repository `Aliahasan399/opencode-hermes-harness` public, explicit authorization to init/commit/push).
+
+- Repository: **https://github.com/Aliahasan399/opencode-hermes-harness** (public; default branch `main`).
+- Initial commit `8aa4e93cb09f0ced333e749e0cc87bff48b89454`; fix commit `d16b5179130c6cab1556bd56904ce5854339be85` (published `engine/package.json` + `package-lock.json`, which the first CI run showed missing).
+- License: **Apache-2.0** (`LICENSE` added; the standard appendix boilerplate placeholder for copyright holder/year remains — owner may replace with legal details).
+- Published files: 318 files at initial commit, 320 after the manifest fix. No sensitive files staged; staged secret scan found only labeled synthetic test canaries.
+- Remote independently verified via `gh api`, `git ls-remote`, and an isolated `git clone`: commit matches, key docs/CI/license/installer present, 0 sensitive files, public-release suite from the clone passed (25 tests, 24 pass, 0 fail, 1 deliberate skip).
+- CI on `main` (final): **all three workflows passed** — `CI (safe checks)`, `Docs check`, `Secret scan` (run IDs 45763669151 / 45763669225 / 45763669092). The first CI run had failed because `engine/package.json` was absent from the published tree; the fix commit `d16b517` corrected it. Dependabot opened 2 PRs and a separate `Dependabot Updates` job on `main` reported a failure before the fix; those are dependency-bot metadata jobs, not the release gate. See `github-ci-report.md`.
 
 **Stage A verified:** GitHub account `Aliahasan399` (personal User; no organizations), token scopes
 `gist`, `read:org`, `repo`, `workflow` (token value never printed), core rate-limit ~4988/5000.

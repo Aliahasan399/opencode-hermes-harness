@@ -1,6 +1,6 @@
 # GitHub Final Verification Report — OpenCode Harness
 
-Date: 2026-11-26. Status: **pre-publication verification complete; remote verification NOT APPLICABLE (nothing published)**.
+Date: 2026-11-26. Status: **published and independently verified** (owner decisions received: Apache-2.0, `Aliahasan399/opencode-hermes-harness`, explicit push authorization). Phase 28 conditional-readiness statement is preserved.
 
 ## Local verification actually performed
 | Check | Command / evidence | Result |
@@ -18,10 +18,14 @@ Date: 2026-11-26. Status: **pre-publication verification complete; remote verifi
 | Docs/CI audit | `github-ci-report.md` | CI defects fixed (correct installer path, public-release test gate, extended syntax checks) |
 | Documentation link check / CI YAML | auditor replayed docs-check + parsed 3 workflows with js-yaml | pass; YAML parse verified |
 
-## Remote verification (Stage J) — NOT PERFORMED
-Correct owner, repository name, visibility, default branch, commit, license visible, README render,
-docs/CI presence, no published secrets, clone verification: **all NOT APPLICABLE** because no
-repository was created and no push occurred.
+## Remote verification (Stage J) — COMPLETED after owner authorization
+- Owner/name/visibility: `gh api repos/Aliahasan399/opencode-hermes-harness` → `full_name=Aliahasan399/opencode-hermes-harness`, `private=false`, `default_branch=main`.
+- Commit: `git ls-remote .../refs/heads/main` → `d16b5179130c6cab1556bd56904ce5854339be85`, matching local HEAD.
+- Published tree: 349 entries (320 tracked files); `LICENSE`, `README.md`, `INSTALL.md`, `QUICKSTART.md`, `docs/`, `installer/bootstrap/install.mjs`, `.github/workflows/{ci,docs-check,secret-scan}.yml`, `.env.example`, `.gitignore` all present.
+- No sensitive files in clone (`\.env`, `backups/`, `checkpoints/`, `*.sql.err`, `data/`, `reports/`): **0 found**.
+- Isolated `git clone` into a temp dir → exit 0, commit matches, public-release suite from the clone: **25 tests, 24 pass, 0 fail, 1 deliberate skip**.
+- CI on `main` final: `CI (safe checks)`, `Docs check`, `Secret scan` all **success** after the manifest fix commit.
+- No production installation, migration, service startup or real OpenCode/MCP registration was run from the clone.
 
 ## Publication gate — exact owner decisions still required
 1. Repository identity: owner (`Aliahasan399` verified) + name (suggestion `opencode-hermes-harness`) + visibility (public requested).

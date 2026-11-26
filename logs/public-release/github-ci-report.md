@@ -211,3 +211,9 @@ Modified by this audit: **only** `logs/public-release/github-ci-report.md` (this
 
 Re-run local evidence after the fixes: public-release suite from the repo root → exit 0, 25 tests /
 24 pass / 0 fail / 1 skip; `node --check` on the 9 remediated source/test files → all pass.
+
+## Observed GitHub Actions results (after publication)
+- First push (commit `8aa4e93`): `Docs check` success, `Secret scan` success, `CI (safe checks)` **failed** � `npm install` in the isolated-DB job could not read `engine/package.json` because that manifest had not been staged. A real publication defect, not a CI false alarm.
+- Fix commit `d16b517` added `engine/package.json` and `engine/package-lock.json`. Re-run: all three workflows on `main` **success** (`CI (safe checks)` 45763669151, `Docs check` 45763669225, `Secret scan` 45763669092).
+- Dependabot created 2 PRs (actions/checkout 4 to 7, actions/setup-node 4 to 7) and a `Dependabot Updates` job on `main` reported a failure before the fix; these are dependency-bot jobs, not the release gate.
+- CI does not claim real OpenCode host execution, service startup, or production migrations.
