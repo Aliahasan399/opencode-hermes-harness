@@ -25,7 +25,7 @@ jobs:
       matrix:
         node: [20, 22, 26] # tested local runtime: v26.5.0
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
@@ -74,7 +74,7 @@ jobs:
       HARNESS_SEMANTIC_LLM: "0"
       OPTIMIZATION_LEVEL: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 26 # tested v26.5.0
@@ -139,7 +139,7 @@ jobs:
     name: Public-release verification suite (gate)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 26 # tested local runtime v26.5.0
@@ -155,7 +155,7 @@ jobs:
     # no --apply, no DB, no service startup, no host-agent registration.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 20
