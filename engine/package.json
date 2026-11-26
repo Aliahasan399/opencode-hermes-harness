@@ -1,0 +1,17 @@
+{
+  "name": "opencode-memory-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Persistent memory engine for OpenCode (PostgreSQL + pgvector + local Ollama embeddings)",
+  "scripts": {
+    "start": "node src/server.js",
+    "cli": "node src/cli.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "pg": "^8.13.0",
+    "zod": "^3.24.0"
+  }
+}
